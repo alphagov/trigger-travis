@@ -1,1 +1,1 @@
-web: gunicorn trigger-travis.main:app --log-file -
+web: gunicorn triggertravis.main:app --log-file -
