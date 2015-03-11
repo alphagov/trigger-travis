@@ -1,11 +1,11 @@
-# payment-provider-testing
+# trigger-travis
 
 ## Requirements
 * Python
 
 ## Developer Configuration
+* Set `PYTHONPATH` env var to "src/"
 * Set `TRAVIS_TOKEN` env var to your Travis API token
-* Set `REPO_NAME` env var to the github repo to build (must already be in Travis CI)
 * Set `TRAVIS_ENDPOINT` to `https://api.travis-ci.com/` if using Travis Pro. It is `https://api.travis-ci.org/` by default.
 
 ## Developer Set-Up
