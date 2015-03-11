@@ -19,3 +19,16 @@ pip install -r requirements.txt
 ```
 src/dev_server.py
 ```
+
+## API
+
+```
+http://server/trigger/<repo_name>
+```
+
+For example:
+```
+http://server/trigger/alphagov/example-project
+```
+
+Can only build the master at the moment, but support for other branches will be added.
