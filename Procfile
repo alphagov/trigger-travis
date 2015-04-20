@@ -1,1 +1,2 @@
-web: gunicorn triggertravis.main:app --log-file -
+web: gunicorn triggertravis.web:app --log-file -
+worker: python src/triggertravis/worker.py
