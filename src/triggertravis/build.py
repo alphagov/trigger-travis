@@ -20,6 +20,7 @@ SLACK_CHANNEL = os.getenv('SLACK_CHANNEL')
 
 
 def notify(message, emoji = ":monkey_face:"):
+    print message # for heroku log
     if SLACK_URL and SLACK_CHANNEL:
         data = {
             "icon_emoji": emoji,
