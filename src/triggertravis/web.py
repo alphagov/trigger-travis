@@ -26,12 +26,15 @@ def travis_hook():
         status = None
         
     if (status == STATUS_PASSED) and (payload['branch'] == 'master'):
-        queue.enqueue(
-            deploy_and_test,
-            payload['repository']['owner_name'],
-            payload['repository']['name'],
-            payload['branch'],
-            payload['commit']
+        queue.enqueue_call(
+            func=deploy_and_test,
+            args=(
+                payload['repository']['owner_name'],
+                payload['repository']['name'],
+                payload['branch'],
+                payload['commit'],
+            ),
+            timeout=600
         )
         
     return "OK"

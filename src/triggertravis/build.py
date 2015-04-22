@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, json, requests
+import os, json, requests, time
 
 from github import GitHub
 from heroku import Heroku
@@ -18,6 +18,13 @@ SLACK_URL = os.getenv('SLACK_URL')
 SLACK_CHANNEL = os.getenv('SLACK_CHANNEL')
 
 
+def commit_url(repo_path, commit_id):
+    return "https://github.com/{}/commit/{}".format(repo_path, commit_id[0:7])
+
+
+def heroku_url(app_name):
+    return "https://{}.herokuapp.com/".format(app_name)
+
 
 def notify(message, emoji = ":monkey_face:"):
     print message # for heroku log
@@ -33,11 +40,12 @@ def notify(message, emoji = ":monkey_face:"):
 
 
 def deploy_and_test(repo_owner, repo_name, branch, commit_id):
+    time.sleep(10)
     repo_path = repo_owner + '/' + repo_name
     if repo_path in APPS:
         app_name = APPS[repo_path]
         url = github.get_source_tarball(repo_owner, repo_name, commit_id)
-        notify("{}: {} merged to master, deploying to {}".format(repo_name, commit_id, app_name))
+        notify("{}: <{}> merged to master, deploying to <{}>".format(repo_name, commit_url(repo_path, commit_id), heroku_url(app_name)))
         (deployed, message) = heroku.deploy_and_wait(app_name, url, commit_id)
         if deployed:
             print "Deployed"
@@ -66,7 +74,7 @@ def deploy_and_test(repo_owner, repo_name, branch, commit_id):
 
                 time.sleep(5)
                 
-            notify("{}: running end to end tests for {}".format(repo_name, app_name))
+            notify("{}: running end to end tests")
             print "Started build {}".format(running_build['id'])
         else:
             print "Deploy failed: {}".format(message)
